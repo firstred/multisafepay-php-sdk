@@ -173,6 +173,11 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     private $currency;
 
     /**
+     * @var string
+     */
+    private $capture;
+
+    /**
      * @var ?OrderRequest\Arguments\Affiliate
      */
     private $affiliate = null;
@@ -605,6 +610,16 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
     }
 
     /**
+     * @param string $capture
+     * @return OrderRequest
+     */
+    public function addCapture(string $capture = 'manual'): OrderRequest
+    {
+        $this->capture = $capture;
+        return $this;
+    }
+
+    /**
      * @return Affiliate|null
      */
     public function getAffiliate(): ?OrderRequest\Arguments\Affiliate
@@ -644,6 +659,7 @@ class OrderRequest extends RequestBody implements OrderRequestInterface
             'var1' => $this->getVar1(),
             'var2' => $this->getVar2(),
             'var3' => $this->getVar3(),
+            'capture' => $this->capture ?? null,
             'affiliate' => $this->affiliate ? $this->affiliate->getData() : null,
         ];
 
